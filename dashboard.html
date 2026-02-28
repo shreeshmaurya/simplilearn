@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Snacks Point by Shreesh - Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+</head>
+<body class="dashboard-page">
+  <!-- Top Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark dashboard-navbar sticky-top">
+    <div class="container-fluid">
+      <a class="navbar-brand brand-logo-nav" href="#">Snacks Point by Shreesh</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarContent">
+        <!-- Search Bar -->
+        <form class="d-flex mx-auto nav-search" role="search">
+          <div class="input-group">
+            <span class="input-group-text"><i class="fas fa-search"></i></span>
+            <input class="form-control" type="search" id="searchInput" placeholder="Search food items...">
+          </div>
+        </form>
+        <!-- Nav Items -->
+        <ul class="navbar-nav ms-auto align-items-center">
+          <li class="nav-item">
+            <a class="nav-link" href="#"><i class="fas fa-tag me-1"></i>Offers</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link cart-link" href="#" data-bs-toggle="modal" data-bs-target="#cartModal">
+              <i class="fas fa-shopping-cart me-1"></i>Cart
+              <span class="badge bg-danger cart-badge" id="cartCount">0</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#"><i class="fas fa-map-marker-alt me-1"></i>Address</a>
+          </li>
+          <li class="nav-item">
+            <button class="btn btn-outline-light btn-sm ms-2" id="logoutBtn">
+              <i class="fas fa-sign-out-alt me-1"></i>Logout
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Header Banner -->
+  <div class="dashboard-banner">
+    <div class="container-fluid">
+      <div class="row align-items-center">
+        <div class="col-md-8">
+          <h2>Order your favourite food here!</h2>
+          <p class="mb-0">Fresh & delicious meals delivered to your doorstep</p>
+        </div>
+        <div class="col-md-4 text-end">
+          <span class="visitor-counter">
+            <i class="fas fa-eye me-1"></i>Visitors: <span id="visitorCount">0</span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="container-fluid mt-3">
+    <div class="row">
+      <!-- Left Sidebar -->
+      <div class="col-lg-2 col-md-3 d-none d-md-block">
+        <div class="sidebar-left">
+          <h6 class="sidebar-heading">Menu</h6>
+          <ul class="sidebar-nav">
+            <li><a href="#" data-bs-toggle="modal" data-bs-target="#aboutModal"><i class="fas fa-info-circle"></i> About</a></li>
+            <li><a href="#" data-bs-toggle="modal" data-bs-target="#servicesModal"><i class="fas fa-concierge-bell"></i> Services</a></li>
+            <li><a href="#" data-bs-toggle="modal" data-bs-target="#ordersModal"><i class="fas fa-receipt"></i> Your Orders <span class="badge bg-danger" id="ordersCount">0</span></a></li>
+            <li><a href="#" id="sidebarWishlist"><i class="fas fa-heart"></i> Wishlists <span class="badge bg-danger" id="wishlistCount">0</span></a></li>
+            <li><a href="#" data-bs-toggle="modal" data-bs-target="#cartModal"><i class="fas fa-shopping-cart"></i> Cart <span class="badge bg-danger" id="sidebarCartCount">0</span></a></li>
+            <li><a href="#" data-bs-toggle="modal" data-bs-target="#contactModal"><i class="fas fa-phone"></i> Contact</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Center Content - Food Cards Grid -->
+      <div class="col-lg-8 col-md-6">
+        <div class="content-center">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5 class="section-title mb-0">
+              <i class="fas fa-utensils me-2"></i>All Items
+              <span class="active-filter-text" id="activeFilter"></span>
+            </h5>
+            <button class="btn btn-sm btn-outline-secondary d-none" id="clearFilterBtn">
+              <i class="fas fa-times me-1"></i>Clear Filter
+            </button>
+          </div>
+          <div class="row" id="menuContainer">
+            <!-- Food cards loaded dynamically via JS -->
+            <div class="col-12 text-center py-5">
+              <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+              <p class="mt-2 text-muted">Loading menu items...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Sidebar - Categories -->
+      <div class="col-lg-2 col-md-3 d-none d-md-block">
+        <div class="sidebar-right">
+          <h6 class="sidebar-heading">Go For Hunt</h6>
+          <ul class="category-nav" id="categoryNav">
+            <li>
+              <a href="#" class="category-link active" data-category="all">
+                <i class="fas fa-th-large"></i> All Items
+              </a>
+            </li>
+            <li>
+              <a href="#" class="category-link" data-category="Burger">
+                <i class="fas fa-hamburger"></i> Burger
+              </a>
+            </li>
+            <li>
+              <a href="#" class="category-link" data-category="Burrito">
+                <i class="fas fa-pepper-hot"></i> Burrito
+              </a>
+            </li>
+            <li>
+              <a href="#" class="category-link" data-category="Desserts">
+                <i class="fas fa-ice-cream"></i> Desserts
+              </a>
+            </li>
+            <li>
+              <a href="#" class="category-link" data-category="Donuts">
+                <i class="fas fa-cookie"></i> Donuts
+              </a>
+            </li>
+            <li>
+              <a href="#" class="category-link" data-category="Pizza">
+                <i class="fas fa-pizza-slice"></i> Pizza
+              </a>
+            </li>
+          </ul>
+
+          <!-- Quick Add Items -->
+          <h6 class="sidebar-heading mt-3">Popular Picks</h6>
+          <div class="quick-add-list" id="quickAddList">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cart Modal -->
+  <div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header bg-primary text-white">
+          <h5 class="modal-title" id="cartModalLabel">
+            <i class="fas fa-shopping-cart me-2"></i>Your Cart
+          </h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body" id="cartBody">
+          <p class="text-center text-muted">Your cart is empty.</p>
+        </div>
+        <div class="modal-footer">
+          <div class="d-flex justify-content-between w-100 align-items-center">
+            <h5 class="mb-0">Total: $<span id="cartTotal">0.00</span></h5>
+            <div>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Continue Shopping</button>
+              <button type="button" class="btn btn-primary" id="checkoutBtn">
+                <i class="fas fa-credit-card me-1"></i>Checkout
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Orders Modal -->
+  <div class="modal fade" id="ordersModal" tabindex="-1" aria-labelledby="ordersModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header bg-success text-white">
+          <h5 class="modal-title" id="ordersModalLabel">
+            <i class="fas fa-receipt me-2"></i>Your Orders
+          </h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body" id="ordersBody">
+          <p class="text-center text-muted py-3">No orders yet.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-danger btn-sm" id="clearOrdersBtn">
+            <i class="fas fa-trash me-1"></i>Clear History
+          </button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- About Modal -->
+  <div class="modal fade" id="aboutModal" tabindex="-1" aria-labelledby="aboutModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header bg-danger text-white">
+          <h5 class="modal-title" id="aboutModalLabel">
+            <i class="fas fa-info-circle me-2"></i>About Snacks Point by Shreesh
+          </h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div class="text-center mb-3">
+            <span class="brand-logo" style="font-size:2rem;">Snacks Point by Shreesh</span>
+          </div>
+          <p>Welcome to <strong>Snacks Point by Shreesh</strong> — your favourite online food ordering destination! We bring the best burgers, burritos, pizzas, donuts, and desserts right to your doorstep.</p>
+          <div class="row text-center mt-4">
+            <div class="col-4">
+              <i class="fas fa-utensils fa-2x text-danger mb-2"></i>
+              <h6>50+</h6>
+              <small class="text-muted">Menu Items</small>
+            </div>
+            <div class="col-4">
+              <i class="fas fa-users fa-2x text-danger mb-2"></i>
+              <h6>10K+</h6>
+              <small class="text-muted">Happy Customers</small>
+            </div>
+            <div class="col-4">
+              <i class="fas fa-award fa-2x text-danger mb-2"></i>
+              <h6>4.8</h6>
+              <small class="text-muted">Avg Rating</small>
+            </div>
+          </div>
+          <hr>
+          <p class="mb-1"><strong>Our Mission</strong></p>
+          <p class="text-muted">To deliver fresh, delicious, and affordable food with lightning-fast service. Every meal is prepared with love and the finest ingredients.</p>
+          <p class="mb-1"><strong>Founded</strong></p>
+          <p class="text-muted mb-0">2024 &bull; Made with <i class="fas fa-heart text-danger"></i> for food lovers everywhere.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Services Modal -->
+  <div class="modal fade" id="servicesModal" tabindex="-1" aria-labelledby="servicesModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header bg-warning text-dark">
+          <h5 class="modal-title" id="servicesModalLabel">
+            <i class="fas fa-concierge-bell me-2"></i>Our Services
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div class="service-item d-flex align-items-start mb-3">
+            <div class="service-icon me-3">
+              <i class="fas fa-truck fa-2x text-danger"></i>
+            </div>
+            <div>
+              <h6 class="mb-1">Fast Delivery</h6>
+              <p class="text-muted mb-0">Get your food delivered in 30 minutes or less. We partner with the fastest riders in town.</p>
+            </div>
+          </div>
+          <hr>
+          <div class="service-item d-flex align-items-start mb-3">
+            <div class="service-icon me-3">
+              <i class="fas fa-leaf fa-2x text-success"></i>
+            </div>
+            <div>
+              <h6 class="mb-1">Fresh Ingredients</h6>
+              <p class="text-muted mb-0">All our meals are prepared with 100% fresh, locally-sourced ingredients. No preservatives.</p>
+            </div>
+          </div>
+          <hr>
+          <div class="service-item d-flex align-items-start mb-3">
+            <div class="service-icon me-3">
+              <i class="fas fa-percent fa-2x text-warning"></i>
+            </div>
+            <div>
+              <h6 class="mb-1">Daily Offers & Discounts</h6>
+              <p class="text-muted mb-0">Enjoy exclusive deals every day. Subscribe to get notified about flash sales and combo offers.</p>
+            </div>
+          </div>
+          <hr>
+          <div class="service-item d-flex align-items-start mb-3">
+            <div class="service-icon me-3">
+              <i class="fas fa-undo fa-2x text-info"></i>
+            </div>
+            <div>
+              <h6 class="mb-1">Easy Returns</h6>
+              <p class="text-muted mb-0">Not satisfied? Get a full refund or replacement within 30 minutes of delivery. No questions asked.</p>
+            </div>
+          </div>
+          <hr>
+          <div class="service-item d-flex align-items-start">
+            <div class="service-icon me-3">
+              <i class="fas fa-headset fa-2x text-primary"></i>
+            </div>
+            <div>
+              <h6 class="mb-1">24/7 Support</h6>
+              <p class="text-muted mb-0">Our customer support team is available around the clock via chat, phone, or email.</p>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contact Modal -->
+  <div class="modal fade" id="contactModal" tabindex="-1" aria-labelledby="contactModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header bg-info text-white">
+          <h5 class="modal-title" id="contactModalLabel">
+            <i class="fas fa-phone me-2"></i>Contact Us
+          </h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row mb-4">
+            <div class="col-sm-6 mb-3">
+              <div class="text-center p-3 border rounded">
+                <i class="fas fa-phone-alt fa-2x text-danger mb-2"></i>
+                <h6>Phone</h6>
+                <p class="text-muted mb-0">+1 (555) 123-4567</p>
+              </div>
+            </div>
+            <div class="col-sm-6 mb-3">
+              <div class="text-center p-3 border rounded">
+                <i class="fas fa-envelope fa-2x text-danger mb-2"></i>
+                <h6>Email</h6>
+                <p class="text-muted mb-0">support@snackspoint.com</p>
+              </div>
+            </div>
+            <div class="col-sm-6 mb-3">
+              <div class="text-center p-3 border rounded">
+                <i class="fas fa-map-marker-alt fa-2x text-danger mb-2"></i>
+                <h6>Address</h6>
+                <p class="text-muted mb-0">123 Food Street, NY 10001</p>
+              </div>
+            </div>
+            <div class="col-sm-6 mb-3">
+              <div class="text-center p-3 border rounded">
+                <i class="fas fa-clock fa-2x text-danger mb-2"></i>
+                <h6>Hours</h6>
+                <p class="text-muted mb-0">Mon-Sun: 9 AM - 11 PM</p>
+              </div>
+            </div>
+          </div>
+          <hr>
+          <h6 class="mb-3">Send us a message</h6>
+          <form id="contactForm">
+            <div class="mb-2">
+              <input type="text" class="form-control" placeholder="Your Name" required>
+            </div>
+            <div class="mb-2">
+              <input type="email" class="form-control" placeholder="Your Email" required>
+            </div>
+            <div class="mb-3">
+              <textarea class="form-control" rows="3" placeholder="Your Message" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-danger w-100">
+              <i class="fas fa-paper-plane me-1"></i>Send Message
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>
