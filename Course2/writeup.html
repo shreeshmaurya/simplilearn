@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Project Writeup - HR Portal Using React</title>
+  <style>
+    @page { margin: 1in; }
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      line-height: 1.7;
+      color: #333;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 40px 30px;
+    }
+    h1 { color: #1e3a8a; font-size: 1.8rem; border-bottom: 3px solid #1e40af; padding-bottom: 10px; margin-bottom: 5px; }
+    h2 { color: #1e40af; font-size: 1.3rem; margin-top: 30px; border-left: 4px solid #1e40af; padding-left: 12px; }
+    h3 { color: #555; font-size: 1.05rem; margin-top: 18px; }
+    .subtitle { color: #777; font-size: 0.95rem; margin-bottom: 25px; }
+    .meta-table { width: 100%; border-collapse: collapse; margin: 15px 0 25px; }
+    .meta-table td { padding: 8px 12px; border: 1px solid #ddd; }
+    .meta-table td:first-child { background: #f0f4ff; font-weight: 600; width: 180px; }
+    ul { padding-left: 20px; }
+    li { margin-bottom: 5px; }
+    .tech-badge {
+      display: inline-block; background: #dbeafe; color: #1e40af;
+      padding: 3px 12px; border-radius: 15px; font-size: 0.85rem;
+      margin: 3px 4px 3px 0; font-weight: 500;
+    }
+    .file-tree { background: #f5f5f5; padding: 15px 20px; border-radius: 8px; font-family: 'Consolas', monospace; font-size: 0.9rem; line-height: 1.8; }
+    .step { background: #eff6ff; border-radius: 8px; padding: 12px 16px; margin: 10px 0; border-left: 3px solid #1e40af; }
+    .step strong { color: #1e3a8a; }
+    .note { background: #fff3cd; padding: 10px 14px; border-radius: 6px; font-size: 0.9rem; margin-top: 15px; }
+    code { background: #f1f5f9; padding: 2px 6px; border-radius: 4px; font-size: 0.9em; }
+    .footer { text-align: center; margin-top: 40px; padding-top: 20px; border-top: 2px solid #eee; color: #999; font-size: 0.85rem; }
+  </style>
+</head>
+<body>
+
+<h1>HR Portal</h1>
+<p class="subtitle">Enterprise HR Management Application &mdash; Phase-End Project for Designing a Dynamic Frontend with React</p>
+
+<table class="meta-table">
+  <tr><td>Student Name</td><td>Shreesh Maurya</td></tr>
+  <tr><td>Course</td><td>Full Stack Development Program with Generative AI (Simplilearn)</td></tr>
+  <tr><td>Phase</td><td>Course 2 &mdash; Designing a Dynamic Frontend with React</td></tr>
+  <tr><td>Project Title</td><td>Creating an HR Portal Using React</td></tr>
+  <tr><td>Date</td><td>March 2026</td></tr>
+</table>
+
+<h2>1. Project Overview</h2>
+<p>
+  <strong>HR Portal</strong> is a fully client-side enterprise Human Resources management application built using React 19, React Router, and Vite. The application enables HR professionals to manage employee records, review and act on leave requests, and oversee workforce data through an intuitive dashboard. Employees can register, view and update their personal profiles, and submit leave applications.
+</p>
+<p>
+  The project demonstrates modern React development practices including component-based architecture, context-based state management, role-based access control, protected routing, form validation with real-time feedback, and JSON-based data persistence using localStorage.
+</p>
+
+<h2>2. Technologies Used</h2>
+<p>
+  <span class="tech-badge">React 19</span>
+  <span class="tech-badge">React Router v7</span>
+  <span class="tech-badge">Vite 8</span>
+  <span class="tech-badge">JavaScript (ES6+)</span>
+  <span class="tech-badge">CSS3 Custom Properties</span>
+  <span class="tech-badge">localStorage (JSON)</span>
+  <span class="tech-badge">Playwright (E2E Testing)</span>
+  <span class="tech-badge">Node.js</span>
+</p>
+
+<h2>3. Project Structure</h2>
+<div class="file-tree">
+  hr-portal/<br>
+  ├── index.html &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<em>— Entry HTML</em><br>
+  ├── src/<br>
+  │&nbsp;&nbsp; ├── main.jsx &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<em>— App entry point</em><br>
+  │&nbsp;&nbsp; ├── App.jsx &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<em>— Router &amp; route definitions</em><br>
+  │&nbsp;&nbsp; ├── index.css &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<em>— Enterprise CSS theme</em><br>
+  │&nbsp;&nbsp; ├── contexts/<br>
+  │&nbsp;&nbsp; │&nbsp;&nbsp; └── AuthContext.jsx &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<em>— Auth state, login/signup/logout</em><br>
+  │&nbsp;&nbsp; ├── data/<br>
+  │&nbsp;&nbsp; │&nbsp;&nbsp; └── seedData.js &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<em>— Initial users &amp; leave data</em><br>
+  │&nbsp;&nbsp; ├── utils/<br>
+  │&nbsp;&nbsp; │&nbsp;&nbsp; ├── storage.js &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<em>— localStorage CRUD operations</em><br>
+  │&nbsp;&nbsp; │&nbsp;&nbsp; └── validators.js &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<em>— Email, password, phone validators</em><br>
+  │&nbsp;&nbsp; └── components/<br>
+  │&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; ├── auth/ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<em>— Login, Signup, ProtectedRoute</em><br>
+  │&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; ├── layout/ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<em>— AppLayout, Sidebar, Header</em><br>
+  │&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; ├── dashboard/ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<em>— HRDashboard, EmployeeDashboard</em><br>
+  │&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; ├── employees/ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<em>— EmployeeList, EmployeeForm, EmployeeProfile</em><br>
+  │&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; └── leave/ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<em>— LeaveManagement, EmployeeLeave, LeaveRequestForm</em><br>
+  ├── e2e/ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<em>— 7 Playwright test suites (61 tests)</em><br>
+  └── playwright.config.js &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<em>— E2E test configuration</em>
+</div>
+
+<h2>4. Features Implemented</h2>
+
+<h3>4.1 User Authentication (Login &amp; Signup)</h3>
+<ul>
+  <li>Login form with email and password fields, real-time validation, and error feedback.</li>
+  <li>Authentication against JSON-stored user records in localStorage.</li>
+  <li>Role-based redirect: HR users go to <code>/hr/dashboard</code>, employees go to <code>/employee/dashboard</code>.</li>
+  <li>Session persistence — logged-in users remain authenticated across page refreshes.</li>
+  <li>Logout clears session data and redirects to the login page.</li>
+  <li>Demo credentials displayed on the login page for easy testing.</li>
+</ul>
+
+<h3>4.2 Employee Registration (Signup)</h3>
+<ul>
+  <li>Multi-field registration form: first name, last name, email, phone, department, position, password.</li>
+  <li>Department selection from a predefined dropdown list (Engineering, Marketing, Finance, etc.).</li>
+  <li>Password strength indicator with real-time visual feedback (weak/medium/strong).</li>
+  <li>Password confirmation with mismatch detection.</li>
+  <li>Duplicate email prevention with appropriate error messages.</li>
+  <li>New users are automatically assigned the "employee" role and redirected to their dashboard.</li>
+</ul>
+
+<h3>4.3 Role-Based Access Control (RBAC)</h3>
+<ul>
+  <li>Two distinct roles: <strong>HR</strong> and <strong>Employee</strong>, each with dedicated routes and UI.</li>
+  <li>ProtectedRoute component guards all authenticated routes.</li>
+  <li>Cross-role access is blocked: employees cannot access <code>/hr/*</code> routes and vice versa.</li>
+  <li>Unauthenticated users are redirected to the login page from any protected route.</li>
+  <li>Role-specific navigation menus and role badges displayed in the header.</li>
+</ul>
+
+<h3>4.4 HR Dashboard</h3>
+<ul>
+  <li>Four statistics cards: Total Employees, Active Employees, Pending Leave Requests, Departments.</li>
+  <li>Recent Employees table with name, department, and status columns.</li>
+  <li>Recent Leave Requests table with employee name, leave type, and status badges.</li>
+  <li>Quick navigation links to the Employee Management and Leave Management pages.</li>
+</ul>
+
+<h3>4.5 Employee Profile Management (HR)</h3>
+<ul>
+  <li>Full employee list with tabular display showing name, email, department, position, join date, and status.</li>
+  <li><strong>Search:</strong> Real-time filtering by name or email address.</li>
+  <li><strong>Filter:</strong> Department-based dropdown filter.</li>
+  <li><strong>Add Employee:</strong> Modal form to create new employee records with all required fields.</li>
+  <li><strong>Edit Employee:</strong> Modal form pre-filled with existing data for updating records.</li>
+  <li><strong>Activate/Deactivate:</strong> Toggle employee status between active and inactive.</li>
+  <li><strong>Delete:</strong> Remove employee with a confirmation dialog to prevent accidental deletion.</li>
+</ul>
+
+<h3>4.6 Employee Data Storage (JSON)</h3>
+<ul>
+  <li>All employee profiles are stored as JSON objects in the browser's localStorage.</li>
+  <li>Seed data includes 4 pre-configured users (1 HR manager + 3 employees) for immediate testing.</li>
+  <li>A dedicated storage utility module (<code>utils/storage.js</code>) provides CRUD functions for users and leave requests.</li>
+  <li>Data is initialized on first load and persists across browser sessions.</li>
+</ul>
+
+<h3>4.7 Leave Request Management</h3>
+<ul>
+  <li><strong>Employee side:</strong> Apply for leave with type selection (Annual, Sick, Personal, Maternity/Paternity, Unpaid), date range, and reason.</li>
+  <li>Leave history table with status badges (pending, approved, rejected) and filter by status.</li>
+  <li><strong>HR side:</strong> View all leave requests across the organization with employee name and details.</li>
+  <li>Approve or reject pending requests with one click; reviewer name and date are recorded.</li>
+  <li>Filter by status and leave type for efficient review.</li>
+  <li>Pending request count displayed on the page header.</li>
+</ul>
+
+<h3>4.8 Employee Dashboard &amp; Profile</h3>
+<ul>
+  <li>Personalized welcome message and leave statistics (total, approved, pending, rejected).</li>
+  <li>Profile summary card with avatar initials, name, email, department, position, and join date.</li>
+  <li>Editable profile: employees can update their first name, last name, and phone number.</li>
+  <li>Department and position fields are read-only (HR-managed).</li>
+  <li>Success/error feedback after profile updates.</li>
+</ul>
+
+<h3>4.9 Responsive UI &amp; Navigation</h3>
+<ul>
+  <li><strong>Sidebar navigation:</strong> Fixed dark sidebar with role-specific menu items and SVG icons.</li>
+  <li><strong>Header bar:</strong> Displays greeting, user role badge, and responsive menu toggle.</li>
+  <li><strong>Mobile responsive:</strong> Sidebar collapses to an overlay on screens below 768px.</li>
+  <li><strong>Tablet responsive:</strong> Stats grid adjusts from 4 columns to 2 columns on medium screens.</li>
+  <li><strong>Professional CSS theme</strong> using CSS custom properties for consistent styling across all components.</li>
+</ul>
+
+<h3>4.10 Enterprise CSS Styling</h3>
+<ul>
+  <li>Complete design system with CSS custom properties for colors, spacing, shadows, and border radii.</li>
+  <li>Blue enterprise color scheme with primary, success, warning, danger, and info variants.</li>
+  <li>Card-based layouts with subtle shadows, rounded corners, and hover effects.</li>
+  <li>Status badges with color-coded backgrounds for active/inactive, approved/rejected/pending states.</li>
+  <li>Gradient login page background with centered authentication card.</li>
+  <li>Consistent form styling with focus states, disabled states, and field-level error messages.</li>
+  <li>Modal overlays with backdrop blur for add/edit forms and confirmation dialogs.</li>
+</ul>
+
+<h2>5. How to Run the Application</h2>
+
+<div class="step">
+  <strong>Step 1:</strong> Ensure <strong>Node.js</strong> (v18 or higher) is installed on your system.
+</div>
+<div class="step">
+  <strong>Step 2:</strong> Open a terminal and navigate to the <code>hr-portal</code> directory.
+</div>
+<div class="step">
+  <strong>Step 3:</strong> Install dependencies:<br>
+  <code>npm install</code>
+</div>
+<div class="step">
+  <strong>Step 4:</strong> Start the development server:<br>
+  <code>npm run dev</code>
+</div>
+<div class="step">
+  <strong>Step 5:</strong> Open the displayed URL (e.g., <code>http://localhost:5173</code>) in your browser.
+</div>
+<div class="step">
+  <strong>Step 6:</strong> Log in with the demo credentials:<br>
+  &nbsp;&nbsp;&nbsp;&bull; HR Manager: <code>admin@hrportal.com</code> / <code>Admin@123</code><br>
+  &nbsp;&nbsp;&nbsp;&bull; Employee: <code>john.doe@hrportal.com</code> / <code>Employee@123</code>
+</div>
+<div class="step">
+  <strong>Step 7:</strong> As HR, explore the Dashboard, manage Employees, and review Leave Requests.
+</div>
+<div class="step">
+  <strong>Step 8:</strong> Log out and log in as an Employee to view the Employee Dashboard, update your Profile, and apply for Leave.
+</div>
+<div class="step">
+  <strong>Step 9:</strong> To run the Playwright E2E test suite:<br>
+  <code>npm run build && npm run test:e2e</code>
+</div>
+
+<div class="note">
+  <strong>Note:</strong> The application is entirely client-side. No backend server is required. All data (users, leave requests, sessions) is stored in the browser's localStorage as JSON. The seed data is automatically loaded on first visit.
+</div>
+
+<h2>6. End-to-End Testing</h2>
+<p>
+  The application includes a comprehensive Playwright test suite with <strong>61 end-to-end tests</strong> across 7 test files:
+</p>
+<ul>
+  <li><strong>auth.spec.js</strong> (9 tests) &mdash; Login form display, validation errors, successful login for both roles, logout.</li>
+  <li><strong>signup.spec.js</strong> (7 tests) &mdash; Registration form, field validation, password strength, duplicate prevention, successful registration.</li>
+  <li><strong>rbac.spec.js</strong> (8 tests) &mdash; Route protection, cross-role redirect blocking, role-specific navigation and badges.</li>
+  <li><strong>dashboard.spec.js</strong> (11 tests) &mdash; HR and Employee dashboard statistics, tables, navigation links.</li>
+  <li><strong>employee-management.spec.js</strong> (8 tests) &mdash; Employee list, search, filter, add, edit, delete with confirmation.</li>
+  <li><strong>leave-management.spec.js</strong> (12 tests) &mdash; Employee leave apply/view/filter, HR approve/reject/filter.</li>
+  <li><strong>profile.spec.js</strong> (6 tests) &mdash; Profile display, edit mode, save changes, cancel, disabled fields.</li>
+</ul>
+
+<h2>7. Key React Concepts Demonstrated</h2>
+<ul>
+  <li><strong>Component-Based Architecture:</strong> 14 reusable React components organized by feature (auth, layout, dashboard, employees, leave).</li>
+  <li><strong>React Context API:</strong> Centralized authentication state with <code>AuthContext</code> providing user data, login, signup, and logout functions to all components.</li>
+  <li><strong>React Router v7:</strong> Nested route configuration with layout routes, index redirects, and programmatic navigation.</li>
+  <li><strong>Protected Routes:</strong> Custom <code>ProtectedRoute</code> component wrapping route groups with authentication and role checks.</li>
+  <li><strong>Controlled Forms:</strong> All forms use React controlled components with <code>useState</code> for form data, validation errors, and submission state.</li>
+  <li><strong>Hooks:</strong> Extensive use of <code>useState</code>, <code>useEffect</code>, <code>useCallback</code>, <code>useMemo</code>, and <code>useContext</code> for state management and performance optimization.</li>
+  <li><strong>Conditional Rendering:</strong> Role-based UI rendering, edit/view mode toggling, modal visibility, and empty state handling.</li>
+  <li><strong>CSS Custom Properties:</strong> Full design system with CSS variables for theming, enabling consistent styling across all components.</li>
+  <li><strong>Responsive Design:</strong> CSS media queries at 1024px, 768px, and 480px breakpoints for desktop, tablet, and mobile layouts.</li>
+</ul>
+
+<h2>8. Conclusion</h2>
+<p>
+  This project successfully implements a fully functional HR Portal using React, covering all nine tasks outlined in the Phase-End Project requirements. The application features a complete authentication system with login and signup, role-based access control for HR and Employee users, comprehensive employee profile management with CRUD operations, a leave request and approval workflow, responsive dashboards with real-time statistics, and a polished enterprise CSS theme. The project is thoroughly tested with 61 Playwright end-to-end tests validating every feature, achieving 100% pass rate across authentication, authorization, employee management, leave management, and profile workflows.
+</p>
+
+<div class="footer">
+  HR Portal &bull; Simplilearn &mdash; Full Stack Development Program with Generative AI &bull; March 2026
+</div>
+
+</body>
+</html>
